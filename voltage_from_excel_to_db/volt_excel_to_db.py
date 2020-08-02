@@ -28,7 +28,7 @@ def dfToListOfTuples(df):
 def voltToDb(configDict):
     import pandas as pd 
     import cx_Oracle
-    path=configDict['file_path'] + '\\VOLTTEMP_22_07_2019.csv'
+    path=configDict['file_path'] + '\\VOLTTEMP_24_07_2019.csv'
     df=pd.read_csv(path,skiprows=2,skipfooter=7)
     df=filterVoltage(df)
     data=dfToListOfTuples(df) #data contains list of tuples
@@ -42,7 +42,7 @@ def voltToDb(configDict):
         print(connection.version)
         try:
             cur=connection.cursor()
-            insert_sql="INSERT INTO voltage(time_stamp,station_name,voltage_value) VALUES(:timestamp, :station_name, :voltage_value)"
+            insert_sql="INSERT INTO voltage(time_stamp,node_scada_name,voltage_value) VALUES(:timestamp, :station_name, :voltage_value)"
             cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MM-YYYY HH24:MI:SS' ")
             cur.executemany(insert_sql,data)
 
