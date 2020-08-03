@@ -31,6 +31,10 @@ def toRequiredFormat(df):
 def getFreqFromDb(startDate,endDate,configDict):
     import cx_Oracle
     import pandas as pd
+    startDate=str(startDate.date())
+    endDate=str(endDate.date())
+    startDate=startDate[:4]+startDate[5:7]+startDate[8:10]
+    endDate=endDate[:4]+endDate[5:7]+endDate[8:10]
     try:
         connString=configDict['con_string_server_db2']
         connection=cx_Oracle.connect(connString)

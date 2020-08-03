@@ -28,7 +28,7 @@ def dfToListOfTuples(df):
 def voltToDb(configDict):
     import pandas as pd 
     import cx_Oracle
-    path=configDict['file_path'] + '\\VOLTTEMP_24_07_2019.csv'
+    path=configDict['file_path'] + '\\VOLTTEMP_28_07_2019.csv'
     df=pd.read_csv(path,skiprows=2,skipfooter=7)
     df=filterVoltage(df)
     data=dfToListOfTuples(df) #data contains list of tuples

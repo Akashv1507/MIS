@@ -44,14 +44,6 @@ def derivedFieldsCalculation(df):
         outOfIegcBand = lessThanIegcBand + greaterThanIegcBand #percentage of time
         NoOfHrsFreqOutOfBand= (outOfIegcBand*24)/100  # In no. of hrs
         FDI=NoOfHrsFreqOutOfBand/24
-        # print(greaterThanIegcBand)
-        # print(lessThanIegcBand)
-        # print(betweenIegcBand)
-        # print(NoOfHrsFreqOutOfBand)
-        # print(date)
-        # print(maxValue)
-        # print(minValue)
-        # print(avgValue)
         tempTuple=(date,maxValue,minValue,avgValue,lessThanIegcBand,betweenIegcBand,greaterThanIegcBand,outOfIegcBand,NoOfHrsFreqOutOfBand,FDI)
         data.append(tempTuple)
 
@@ -62,6 +54,8 @@ def derivedFieldsCalculation(df):
 def fetchRawFreqFromDb(startDateKey,endDateKey,configDict):
     import cx_Oracle
     import pandas as pd
+    startDateKey=str(startDateKey.date())
+    endDateKey=str(endDateKey.date())
     start_time_value= startDateKey + " 00:00:00"
     end_time_value= endDateKey + " 23:59:50"
     try:

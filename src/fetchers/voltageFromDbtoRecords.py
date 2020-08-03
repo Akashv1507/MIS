@@ -9,6 +9,8 @@ def toRecordss(df):
 def fetchRawVoltFromDb(startDateKey,endDateKey,configDict):
     import cx_Oracle
     import pandas as pd
+    startDateKey=str(startDateKey.date())
+    endDateKey=str(endDateKey.date())
     start_time_value= startDateKey + " 00:00:00"
     end_time_value= endDateKey + " 23:59:00"
     try:
