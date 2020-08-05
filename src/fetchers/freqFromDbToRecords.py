@@ -1,7 +1,17 @@
-def derivedFieldsCalculation(df):
-    import pandas as pd 
-    import numpy as np
+import cx_Oracle
+import pandas as pd
+import datetime as dt
+from typing import List, Tuple
 
+def derivedFieldsCalculation(df: pd.core.frame.DataFrame):
+    """convert dataframe into list of tuples each tuple having derived freq parameters
+
+    Args:
+        df (pd.core.frame.DataFrame): df as a dataframe
+
+    Returns:
+        List[Tuple]: list of tuples of derived freq parameters
+    """    
     def lessThan(lstOfFreq):
         count=0
         for i in lstOfFreq:
@@ -39,7 +49,6 @@ def derivedFieldsCalculation(df):
         avgValue= average(groupDf['FREQUENCY'].values)
         lessThanIegcBand=lessThan(groupDf['FREQUENCY'].values)  #percentage of time
         greaterThanIegcBand=greaterThan(groupDf['FREQUENCY'].values) #percentage of time
-        # print(type(groupDf['FREQUENCY'][0]))
         betweenIegcBand=100-(lessThanIegcBand+greaterThanIegcBand) #percentage of time
         outOfIegcBand = lessThanIegcBand + greaterThanIegcBand #percentage of time
         NoOfHrsFreqOutOfBand= (outOfIegcBand*24)/100  # In no. of hrs
@@ -51,13 +60,22 @@ def derivedFieldsCalculation(df):
     return data
 
 
-def fetchRawFreqFromDb(startDateKey,endDateKey,configDict):
-    import cx_Oracle
-    import pandas as pd
-    startDateKey=str(startDateKey.date())
-    endDateKey=str(endDateKey.date())
-    start_time_value= startDateKey + " 00:00:00"
-    end_time_value= endDateKey + " 23:59:50"
+def fetchRawFreqFromDb(startDateKey: dt.datetime, endDateKey: dt.datetime,configDict : dict):
+    """returns derived freq fields in form of list of tuples ,each tuple belongs to a day
+
+    Args:
+        startDateKey (dt.datetime): start-date
+        endDateKey (dt.datetime): end-date
+        configDict (dict): confguration of application
+
+    Returns:
+        List[Tuple]: list of tuples of derived freq parameters
+    """    
+    
+    startDate=str(startDateKey.date())
+    endDate=str(endDateKey.date())
+    start_time_value= startDate + " 00:00:00"
+    end_time_value= endDate + " 23:59:50"
     try:
         connString=configDict['con_string_local']
         connection=cx_Oracle.connect(connString)
@@ -83,6 +101,7 @@ def fetchRawFreqFromDb(startDateKey,endDateKey,configDict):
         cur.close()
         connection.close()
         print("connection closed")
-        listOfTuples=derivedFieldsCalculation(df)
-        return listOfTuples
+
+    listOfTuples=derivedFieldsCalculation(df)
+    return listOfTuples
         

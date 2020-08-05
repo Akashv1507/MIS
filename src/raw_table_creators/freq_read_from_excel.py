@@ -1,6 +1,16 @@
-def readFreqExcel(configDict):
-    import pandas as pd 
-    import cx_Oracle
+from typing import List, Tuple
+import pandas as pd 
+import cx_Oracle
+def readFreqExcel(configDict: dict) -> bool:
+    """[summary]
+
+    Args:
+        configDict (dict): application configuration
+
+    Returns:
+        bool: return true if data insertion is successfull
+    """    
+    
     path=configDict['file_path'] + '\\frequency.xlsx'
     df=pd.read_excel(path,names=['timestamp','frequency'])
     df['timestamp']=df['timestamp'].astype(str)
@@ -14,6 +24,7 @@ def readFreqExcel(configDict):
     try:
         con_string= configDict['con_string_local']
         connection= cx_Oracle.connect(con_string)
+        isRawDataInsertionSuccess = True
 
     except Exception as err:
         print('error while creating a connection',err)
@@ -27,6 +38,7 @@ def readFreqExcel(configDict):
 
         except Exception as err:
             print('error while creating a cursor',err)
+            isRawDataInsertionSuccess = False
 
         else:
             print('Insertion complete')
@@ -34,6 +46,7 @@ def readFreqExcel(configDict):
     finally:
         cur.close()
         connection.close()
+    return isRawDataInsertionSuccess
 
 
 

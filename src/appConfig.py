@@ -6,7 +6,7 @@ return apllication config dictionary from config.xlsx file
 def getAppConfigDict():
     import pandas as pd 
     # file path of config excel
-    configFilePath = r"G:\python\Mis_code\configuration\config.xlsx"
+    configFilePath = r"G:\python\Mis_code\src\config.xlsx"
     # get the config excel into a df
     configDf = pd.read_excel(configFilePath, header=None)
     # make the first column as index

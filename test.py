@@ -1,37 +1,19 @@
-from datetime import datetime as dt
-from configuration.appConfig import getAppConfigDict
-from src.raw_table_creators.freq_read_from_excel import readFreqExcel
-from src.fetchers.freqDbFetcherServer import getFreqFromDb
-from src.raw_table_creators.freq_in_records_to_db import freqToDb
-from src.raw_table_creators.volt_excel_to_db import voltToDb
-from src.fetchers.freqFromDbToRecords import fetchRawFreqFromDb
-from src.derived_table_creators.derFreqParamInRecordsToDb import freqDerivedRecordsToDb
-from src.fetchers.voltageFromDbtoRecords import fetchRawVoltFromDb
-from src.derived_table_creators.derVoltageParamInRecordsToDb import voltDerivedRecordsToDb
-configDict=getAppConfigDict()
-startDate=dt.strptime("2019-07-24", '%Y-%m-%d')
-endDate=dt.strptime("2019-07-24", '%Y-%m-%d')
+import unittest
+from tests.fetchers import test_freqFromDbToRecords
+from tests.raw_table_creators import test_freqReadFromExcel
 
 
-# read_freq_excel(configDict)
-# listOfTuples=getFreqFromDb(startDate,endDate,configDict)
-# print(listOfTuples[:5])
-# print(len(listOfTuples))
-# freqToDb(listOfTuples,configDict)
-
-# voltToDb(configDict)
-
-# listOfTuplesOfDerivedFreq = fetchRawFreqFromDb(startDate,endDate,configDict)
-# print(listOfTuplesOfDerivedFreq)
-# freqDerivedRecordsToDb(listOfTuplesOfDerivedFreq,configDict)
-
-# data=fetchRawVoltFromDb(startDate,endDate,configDict)
-# print(data[:5])
-# voltDerivedRecordsToDb(data,configDict)
+# initialize the test suite
+loader = unittest.TestLoader()
+freqFromDbTestSuite = unittest.TestSuite()
+readFreqFromExcelTestSuite=unittest.TestSuite()
 
 
+# add tests to the test suite
+freqFromDbTestSuite.addTests(loader.loadTestsFromModule(test_freqFromDbToRecords))
+readFreqFromExcelTestSuite.addTests(loader.loadTestsFromModule(test_freqReadFromExcel))
 
-
-
-
-
+# initialize a runner, pass it your suite and run it
+runner = unittest.TextTestRunner(verbosity=3)
+# result1 = runner.run(freqFromDbTestSuite)
+result2=runner.run(readFreqFromExcelTestSuite)

@@ -1,11 +1,8 @@
-
-"""
-Return dataframe that has columns datetime & freq_val
-startDate - datetime object
-endDate - datetime object
-returns - dataframe that has columns datetime (datetime object) & freq_val(number)
-"""
-def toRequiredFormat(df):
+import cx_Oracle
+import pandas as pd
+import datetime as dt
+from typing import List, Tuple
+def toRequiredFormat(df: pd.core.frame.DataFrame):
     import pandas as pd
     #resetting column name 
     df.rename(columns={'DATE_KEY':'date_key', 'TIME_KEY':'time_key','FREQ_VAL':'freq_val'},inplace=True)
@@ -28,13 +25,11 @@ def toRequiredFormat(df):
     data=list(records)
     return data
 
-def getFreqFromDb(startDate,endDate,configDict):
-    import cx_Oracle
-    import pandas as pd
-    startDate=str(startDate.date())
-    endDate=str(endDate.date())
-    startDate=startDate[:4]+startDate[5:7]+startDate[8:10]
-    endDate=endDate[:4]+endDate[5:7]+endDate[8:10]
+def getFreqFromDb(startDate:dt.datetime,endDate:dt.datetime,configDict:dict):
+    startDateValue=str(startDate.date())
+    endDateValue=str(endDate.date())
+    startDateValue=startDateValue[:4]+startDateValue[5:7]+startDateValue[8:10]
+    endDateValue=endDateValue[:4]+endDateValue[5:7]+endDateValue[8:10]
     try:
         connString=configDict['con_string_server_db2']
         connection=cx_Oracle.connect(connString)
@@ -47,9 +42,9 @@ def getFreqFromDb(startDate,endDate,configDict):
             cur=connection.cursor()
             fetch_sql="SELECT DATE_KEY, TIME_KEY, FREQ_VAL FROM stg_scada_frequency_nldc WHERE date_key>= :start_date AND date_key<= :end_date "
             # cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
-            df=pd.read_sql(fetch_sql,params={'start_date' : startDate,'end_date': endDate},con=connection)
+            df=pd.read_sql(fetch_sql,params={'start_date' : startDateValue,'end_date': endDateValue},con=connection)
             # print(df)
-            listOfTuple=toRequiredFormat(df)
+            
             
         except Exception as err:
             print('error while creating a cursor',err)
@@ -59,5 +54,6 @@ def getFreqFromDb(startDate,endDate,configDict):
     finally:
         cur.close()
         connection.close()
-        return listOfTuple
+    listOfTuple=toRequiredFormat(df)
+    return listOfTuple
         
