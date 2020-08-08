@@ -1,4 +1,16 @@
-def toRecordss(df):
+import cx_Oracle
+import pandas as pd
+import datetime as dt
+from typing import List, Tuple
+def toRecordss(df:pd.core.frame.DataFrame) -> List[Tuple]:
+    """convert data frame into list of tuple
+
+    Args:
+        df (pd.core.frame.DataFrame): pandas dataframe
+
+    Returns:
+        List[Tuple]: list of tuple in the form (date_key, mapping_id, Node_SCADA_name, node_name, minimum, maximum, average)
+    """    
     data=[]
     for ind in df.index:
         tuple_value=(str(df['DATE_KEY'][ind])[:10], int(df['MAPPING_ID'][ind]),df['NODE_SCADA_NAME'][ind], df['NODE_NAME'][ind], float(df['MIN'][ind]), float(df['MAX'][ind]), float(df['AVG'][ind]) )
@@ -6,13 +18,23 @@ def toRecordss(df):
     return data
 
 
-def fetchRawVoltFromDb(startDateKey,endDateKey,configDict):
-    import cx_Oracle
-    import pandas as pd
-    startDateKey=str(startDateKey.date())
-    endDateKey=str(endDateKey.date())
-    start_time_value= startDateKey + " 00:00:00"
-    end_time_value= endDateKey + " 23:59:00"
+def fetchRawVoltFromDb(startDateKey: dt.datetime, endDateKey: dt.datetime,configDict: dict) -> List[Tuple]:
+    """fetches raw voltage data from local db and returns list of tuple in the form
+       (date_key, mapping_id, Node_SCADA_name,node_name, minimum, maximum, average)
+
+    Args:
+        startDateKey (dt.datetime): start date
+        endDateKey (dt.datetime): end date
+        configDict (dict): app configuration dictionary.
+
+    Returns:
+        List[Tuple]: return list of tuple of derived voltage parameters
+    """    
+    
+    start_time_value=str(startDateKey.date())
+    end_time_value=str(endDateKey.date())
+    start_time_value= start_time_value + " 00:00:00"
+    end_time_value= end_time_value + " 23:59:00"
     try:
         connString=configDict['con_string_local']
         connection=cx_Oracle.connect(connString)
@@ -30,7 +52,7 @@ group by vt.node_scada_name,trunc(vt.time_stamp)
 order by date_key,mapping_id'''
             cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
             df=pd.read_sql(fetch_sql,params={'start_time' : start_time_value,'end_time': end_time_value},con=connection)
-            data=toRecordss(df)      
+                 
            
             
         except Exception as err:
@@ -42,6 +64,7 @@ order by date_key,mapping_id'''
         cur.close()
         connection.close()
         print("connection closed")
-        return data
+    data=toRecordss(df) 
+    return data
 
         

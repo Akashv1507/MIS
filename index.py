@@ -19,26 +19,24 @@ from src.fetchers.voltageFromDbtoRecords import fetchRawVoltFromDb
 from src.derived_table_creators.derVoltageParamInRecordsToDb import voltDerivedRecordsToDb
 configDict=getAppConfigDict()
 startDate=dt.strptime("2019-07-24", '%Y-%m-%d')
-endDate=dt.strptime("2019-07-25", '%Y-%m-%d')
-x=(endDate-startDate).days
-print(5*x)
+endDate=dt.strptime("2019-07-24", '%Y-%m-%d')
 
 
-# read_freq_excel(configDict)
+read_freq_excel(configDict)
 listOfTuples=getFreqFromDb(startDate,endDate,configDict)
+print(listOfTuples[:5])
 print(len(listOfTuples))
-# print(len(listOfTuples))
-# freqToDb(listOfTuples,configDict)
+freqToDb(listOfTuples,configDict)
 
-# voltToDb(configDict)
+voltToDb(configDict)
 
-# listOfTuplesOfDerivedFreq = fetchRawFreqFromDb(startDate,endDate,configDict)
-# print(listOfTuplesOfDerivedFreq)
-# freqDerivedRecordsToDb(listOfTuplesOfDerivedFreq,configDict)
+listOfTuplesOfDerivedFreq = fetchRawFreqFromDb(startDate,endDate,configDict)
+print(listOfTuplesOfDerivedFreq)
+freqDerivedRecordsToDb(listOfTuplesOfDerivedFreq,configDict)
 
-# data=fetchRawVoltFromDb(startDate,endDate,configDict)
-# print(data[:5])
-# voltDerivedRecordsToDb(data,configDict)
+data=fetchRawVoltFromDb(startDate,endDate,configDict)
+print(data[:5])
+voltDerivedRecordsToDb(data,configDict)
 
 
 

@@ -1,4 +1,17 @@
-def filterVoltage(df):
+import pandas as pd
+import cx_Oracle
+from typing import List, Tuple
+
+
+def filterVoltage(df: pd.core.frame.DataFrame)-> pd.core.frame.DataFrame:
+    """return dataframe that contain filtered voltage.
+
+    Args:
+        df (pd.core.frame.DataFrame): dataframe without filtering.
+
+    Returns:
+        pd.core.frame.DataFrame: dataframe with filtering.
+    """    
     for col in df.columns.tolist()[1:]:
         prev=df[col][0]
         for ind in df.index.tolist()[1:]:
@@ -16,8 +29,15 @@ def filterVoltage(df):
 
     return df
 
-def dfToListOfTuples(df):
-    # columns_list=df.columns.tolist
+def dfToListOfTuples(df: pd.core.frame.DataFrame)-> List[Tuple]:
+    """convert dataframe that contain per minute volatge value of each node to list of tuple(time_stamp,node_scada_name,voltage_value)
+
+    Args:
+        df (pd.core.frame.DataFrame): dataframe that contain per minute volatge value.
+
+    Returns:
+        List[Tuple]: data=[(time_stamp,node_scada_name,voltage_value)]
+    """    
     data=[]
     for ind in df.index:
         for col in df.columns.tolist()[1:]:
@@ -25,17 +45,24 @@ def dfToListOfTuples(df):
             data.append(tuple_value)
     return data
 
-def voltToDb(configDict):
-    import pandas as pd 
-    import cx_Oracle
+def voltToDb(configDict: dict) -> bool:
+    """read per minute voltage value of each node from excel file(VOLTTEMP_dd_mm_yyyy.csv) and push into local database
+
+    Args:
+        configDict (dict): app configuration
+
+    Returns:
+        bool: returns true if insertion is successfull.
+    """    
+    
     path=configDict['file_path'] + '\\VOLTTEMP_28_07_2019.csv'
     df=pd.read_csv(path,skiprows=2,skipfooter=7)
     df=filterVoltage(df)
     data=dfToListOfTuples(df) #data contains list of tuples
-    print(type(data[0][0]))
     try:
         con_string= configDict['con_string_local']
         connection= cx_Oracle.connect(con_string)
+        isInsertSuccess=True
     except Exception as err:
         print('error while creating a connection',err)
     else:
@@ -48,6 +75,7 @@ def voltToDb(configDict):
 
         except Exception as err:
             print('error while creating a cursor',err)
+            isInsertSuccess= False
 
         else:
             print('Insertion complete')
@@ -55,4 +83,5 @@ def voltToDb(configDict):
     finally:
         cur.close()
         connection.close()
+    return isInsertSuccess
 

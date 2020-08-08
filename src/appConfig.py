@@ -3,10 +3,15 @@ return apllication config dictionary from config.xlsx file
 
 '''
 
-def getAppConfigDict():
+def getAppConfigDict()->dict:
+    """returns dictionary that contains appConfiguration
+
+    Returns:
+        dict: dictionary containing app configuration.
+    """    
     import pandas as pd 
     # file path of config excel
-    configFilePath = r"G:\python\Mis_code\src\config.xlsx"
+    configFilePath = "src\config.xlsx"
     # get the config excel into a df
     configDf = pd.read_excel(configFilePath, header=None)
     # make the first column as index
@@ -17,4 +22,3 @@ def getAppConfigDict():
     # return the config value based on it key from the config dictionary
     return configDict
 
-# print(getAppConfigDict())

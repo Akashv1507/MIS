@@ -1,9 +1,22 @@
-def freqToDb(listOfTuples,configDict):
-    import cx_Oracle
+import cx_Oracle
+import pandas as pd
+import datetime as dt
+from typing import List, Tuple
+def freqToDb(listOfTuples: List[Tuple],configDict: dict) -> bool:
+    """push list of tuples in the form (time_stamp,frequency) into local db
+
+    Args:
+        listOfTuples (List[Tuple]):  data in the form of list of tuples that is to be pushed into database
+        configDict (dict): app configuration
+
+    Returns:
+        bool: true if insertion is successsfull
+    """    
     
     try:
         con_string= configDict['con_string_local']
         connection= cx_Oracle.connect(con_string)
+        isInsertionSuccess = True
 
     except Exception as err:
         print('error while creating a connection',err)
@@ -17,6 +30,7 @@ def freqToDb(listOfTuples,configDict):
 
         except Exception as err:
             print('error while creating a cursor',err)
+            isInsertionSuccess = False
 
         else:
             print('Insertion complete')
@@ -24,4 +38,5 @@ def freqToDb(listOfTuples,configDict):
     finally:
         cur.close()
         connection.close()
+    return isInsertionSuccess
 

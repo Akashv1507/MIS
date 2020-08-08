@@ -2,7 +2,7 @@ from typing import List, Tuple
 import pandas as pd 
 import cx_Oracle
 def readFreqExcel(configDict: dict) -> bool:
-    """[summary]
+    """ Read (timestamp,Frequency) values from excel and push into local database.
 
     Args:
         configDict (dict): application configuration
@@ -17,10 +17,7 @@ def readFreqExcel(configDict: dict) -> bool:
     # print(type(df['timestamp'][0]))
     records=df.to_records(index=False)
     records=tuple(map(tuple, records))
-    data=list(records)
-    # print(type(data[0]))
-    # print(data)
-    # print(str(configDict['con_string_local']))
+    data=list(records)       #list of tuples, each tuple contains (timestamp,frequency)
     try:
         con_string= configDict['con_string_local']
         connection= cx_Oracle.connect(con_string)

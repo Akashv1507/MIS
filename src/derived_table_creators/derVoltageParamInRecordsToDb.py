@@ -1,10 +1,28 @@
-def voltDerivedRecordsToDb(data,configDict):
-    countu=0
-    countd=0
-    import cx_Oracle
+import cx_Oracle
+import datetime as dt
+from typing import List, Tuple
+def voltDerivedRecordsToDb(data:List[Tuple],configDict:dict) -> bool:
+    """push derived voltage data into local database.
+
+    Args:
+        data (List[Tuple]): (DATE_KEY,MAPPING_ID,NODE_SCADA_NAME,NODE_NAME,MINIMUM,MAXIMUM,AVERAGE)
+        configDict (dict): app configuration dictionary
+
+    Returns:
+        bool: returns true if insertion is successful else false
+    """    
+    delData=[]
+    # creating List of tuple (dateKey,nodeName),unique constraint, based on which deletion take place before insertion. 
+    for row in data: 
+        dateKey=row[0]
+        nodeName=row[3]
+        delTuple=(dateKey,nodeName)  
+        delData.append(delTuple)
+
     try:
         connString=configDict['con_string_local']
         connection=cx_Oracle.connect(connString)
+        isInsertionSuccess= True
 
     except Exception as err:
         print('error while creating a connection',err)
@@ -12,31 +30,23 @@ def voltDerivedRecordsToDb(data,configDict):
         print(connection.version)
         try:
             cur=connection.cursor()
-            for rows in data:
-                try:
-                    insert_sql="INSERT INTO derived_voltage(DATE_KEY,MAPPING_ID,NODE_SCADA_NAME,NODE_NAME,MINIMUM,MAXIMUM,AVERAGE) VALUES(:1, :2, :3, :4, :5, :6, :7)"
-                    # print("yaha pahuncha")
-                    cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD' ")
-                    # print("yaha bhi pahuncha")
-                    cur.execute(insert_sql, rows)
-                    print("unique record")
-                    countu=countu+1
-                    print(countu)
-                except Exception as e :
-                    print(e)
-                    print("duplicate records")
-                    countd=countd+1
-                    print(countd)
+            try:
+                cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD' ")
+                del_sql="DELETE FROM derived_voltage where DATE_KEY= :1 AND NODE_NAME= :2 "
+                insert_sql="INSERT INTO derived_voltage(DATE_KEY,MAPPING_ID,NODE_SCADA_NAME,NODE_NAME,MINIMUM,MAXIMUM,AVERAGE) VALUES(:1, :2, :3, :4, :5, :6, :7)"
+                cur.executemany(del_sql,delData)
+                cur.executemany(insert_sql, data)
+                
+            except Exception as e :
+                print("error during deletion/insertion-", e)
+                isInsertionSuccess=False
 
-            # print(type(df['TIME_STAMP'][0]))
-            
-            
         except Exception as err:
             print('error while creating a cursor',err)
+            isInsertionSuccess=False
         else:
-            print('INSERTION complete')
             connection.commit()
     finally:
         cur.close()
         connection.close()
-        print("connection closed")
+    return isInsertionSuccess

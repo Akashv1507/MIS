@@ -3,8 +3,9 @@ import pandas as pd
 import datetime as dt
 from typing import List, Tuple
 
-def derivedFieldsCalculation(df: pd.core.frame.DataFrame):
-    """convert dataframe into list of tuples each tuple having derived freq parameters
+def derivedFieldsCalculation(df: pd.core.frame.DataFrame)->List[Tuple]:
+    """convert dataframe into list of tuples each tuple having derived freq parameters-
+        (date,maxValue,minValue,avgValue,lessThanIegcBand,betweenIegcBand,greaterThanIegcBand,outOfIegcBand,NoOfHrsFreqOutOfBand,FDI)
 
     Args:
         df (pd.core.frame.DataFrame): df as a dataframe
@@ -54,14 +55,13 @@ def derivedFieldsCalculation(df: pd.core.frame.DataFrame):
         NoOfHrsFreqOutOfBand= (outOfIegcBand*24)/100  # In no. of hrs
         FDI=NoOfHrsFreqOutOfBand/24
         tempTuple=(date,maxValue,minValue,avgValue,lessThanIegcBand,betweenIegcBand,greaterThanIegcBand,outOfIegcBand,NoOfHrsFreqOutOfBand,FDI)
-        data.append(tempTuple)
-
-    # print(data)  
+        data.append(tempTuple)  
     return data
 
 
-def fetchRawFreqFromDb(startDateKey: dt.datetime, endDateKey: dt.datetime,configDict : dict):
+def fetchRawFreqFromDb(startDateKey: dt.datetime, endDateKey: dt.datetime,configDict : dict)->List[Tuple]:
     """returns derived freq fields in form of list of tuples ,each tuple belongs to a day
+        (date,maxValue,minValue,avgValue,lessThanIegcBand,betweenIegcBand,greaterThanIegcBand,outOfIegcBand,NoOfHrsFreqOutOfBand,FDI)
 
     Args:
         startDateKey (dt.datetime): start-date
@@ -89,7 +89,7 @@ def fetchRawFreqFromDb(startDateKey: dt.datetime, endDateKey: dt.datetime,config
             fetch_sql="SELECT time_stamp, frequency FROM Frequency2 WHERE time_stamp BETWEEN TO_DATE(:start_time,'YYYY-MM-DD HH24:MI:SS') and TO_DATE(:end_time,'YYYY-MM-DD HH24:MI:SS') ORDER BY ID"
             # cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
             df=pd.read_sql(fetch_sql,params={'start_time' : start_time_value,'end_time': end_time_value},con=connection)
-            # print(type(df['TIME_STAMP'][0]))
+            
             
             
         except Exception as err:
@@ -101,7 +101,6 @@ def fetchRawFreqFromDb(startDateKey: dt.datetime, endDateKey: dt.datetime,config
         cur.close()
         connection.close()
         print("connection closed")
-
     listOfTuples=derivedFieldsCalculation(df)
     return listOfTuples
         
