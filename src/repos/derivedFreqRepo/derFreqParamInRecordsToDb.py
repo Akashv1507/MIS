@@ -41,7 +41,7 @@ class derFreqParamInRecordsToDb():
                     cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD' ")
                     del_sql="DELETE FROM derivedFreq WHERE DATE_KEY = :1 "
                     cur.executemany(del_sql, delData)
-                    insert_sql="INSERT INTO derivedFreq(DATE_KEY,MAXIMUM,MINIMUM,AVERAGE,LESS_THAN_BAND,BETWEEN_BAND,GREATER_THAN_BAND,OUT_OF_BAND,OUT_OF_BAND_INHRS,FDI) VALUES(:1, :2, :3, :4, :5, :6, :7, :8, :9, :10)"
+                    insert_sql="INSERT INTO derived_frequency(DATE_KEY,MAXIMUM,MINIMUM,AVERAGE,LESS_THAN_BAND,BETWEEN_BAND,GREATER_THAN_BAND,OUT_OF_BAND,OUT_OF_BAND_INHRS,FDI) VALUES(:1, :2, :3, :4, :5, :6, :7, :8, :9, :10)"
                     cur.executemany(insert_sql, data)
                 except Exception as e :
                     print("error while insertion/deletion->" ,e) 

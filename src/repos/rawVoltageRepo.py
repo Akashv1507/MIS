@@ -85,7 +85,7 @@ class rawVoltageRepo():
             print(connection.version)
             try:
                 cur=connection.cursor()
-                insert_sql="INSERT INTO voltage(time_stamp,node_scada_name,voltage_value) VALUES(:timestamp, :station_name, :voltage_value)"
+                insert_sql="INSERT INTO raw_voltage(time_stamp,node_scada_name,voltage_value) VALUES(:timestamp, :station_name, :voltage_value)"
                 cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MM-YYYY HH24:MI:SS' ")
                 cur.executemany(insert_sql,data)
 

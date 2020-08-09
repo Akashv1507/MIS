@@ -34,7 +34,7 @@ class rawFrequencyTodbRepo():
             print(connection.version)
             try:
                 cur=connection.cursor()
-                insert_sql="INSERT INTO FREQUENCY2(time_stamp,frequency) VALUES(:timestamp, :frequency)"
+                insert_sql="INSERT INTO raw_frequency(time_stamp,frequency) VALUES(:timestamp, :frequency)"
                 cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
                 cur.executemany(insert_sql,listOfTuples)
 

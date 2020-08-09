@@ -15,9 +15,10 @@ endDate=dt.strptime("2019-07-28", '%Y-%m-%d')
 #repo code start.
 
 print(freqRawTableCreator(startDate,endDate,configDict))
-print(freqDerivedTableCreator(startDate,endDate,configDict))
-print(voltageDerivedTableInsertion(startDate,endDate,configDict))
 print(voltageRawTableCreator(configDict))
+
+print(freqDerivedTableInsertion(startDate,endDate,configDict))
+print(voltageDerivedTableInsertion(startDate,endDate,configDict))
 
 
 
