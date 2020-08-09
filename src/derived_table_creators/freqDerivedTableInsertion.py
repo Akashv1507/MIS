@@ -15,8 +15,8 @@ def freqDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configD
     """    
     
     con_string= configDict['con_string_local']
-    obj_freqFromDbToRecords=freqFromDbToRecords(con_string)
-    obj_derFreqParamInRecordsToDb=derFreqParamInRecordsToDb(con_string)
+    obj_freqFromDbToRecords = freqFromDbToRecords(con_string)
+    obj_derFreqParamInRecordsToDb = derFreqParamInRecordsToDb(con_string)
 
     listOfTuples = obj_freqFromDbToRecords.fetchRawFreqFromDb(startDate,endDate)
 

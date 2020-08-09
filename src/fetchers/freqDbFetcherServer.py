@@ -64,7 +64,7 @@ def getFreqFromDb(startDate:dt.datetime,endDate:dt.datetime,configDict:dict)->Li
             fetch_sql="SELECT DATE_KEY, TIME_KEY, FREQ_VAL FROM stg_scada_frequency_nldc WHERE date_key>= :start_date AND date_key<= :end_date "
             # cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
             df=pd.read_sql(fetch_sql,params={'start_date' : startDateValue,'end_date': endDateValue},con=connection)
-                
+            print(df.head())
         except Exception as err:
             print('error while creating a cursor',err)
         else:

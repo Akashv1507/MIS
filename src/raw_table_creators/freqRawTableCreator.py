@@ -17,6 +17,8 @@ def freqRawTableCreator(startDate:dt.datetime, endDate:dt.datetime,configDict) -
     con_string= configDict['con_string_local']
 
     listOfTuples=getFreqFromDb(startDate,endDate,configDict)
+    print(listOfTuples[:5])
+    print(len(listOfTuples))
 
     Obj_rawFrequencyTodbRepo=rawFrequencyTodbRepo(con_string) # object of rawFrequencyTodbRepo class
 
