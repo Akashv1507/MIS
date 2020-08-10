@@ -4,7 +4,7 @@ from src.repos.derivedVoltageRepo.voltageFromDbtoRecords import voltageFromDbToR
 from src.repos.derivedVoltageRepo.derVoltageParamInRecordsToDb import derVoltageParamInRecordsToDb
 
 def voltageDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configDict) -> bool:
-    """fetch raw voltage from local db->generate derived voltage fields->push derived voltage data into local db
+    """fetch raw voltage from raw_voltage table->generate derived voltage fields->push derived voltage data into derived_voltage table in local db
 
     Args:
         startDate (dt.datetime): start-date

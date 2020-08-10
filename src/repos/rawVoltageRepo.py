@@ -61,7 +61,7 @@ class rawVoltageRepo():
         return data
 
     def voltToDb(self) -> bool:
-        """read per minute voltage value of each node from excel file(VOLTTEMP_dd_mm_yyyy.csv) and push into local database
+        """read per minute voltage value of each node from excel file(VOLTTEMP_dd_mm_yyyy.csv) and push into raw_voltage table in local database
 
         Args:
             self : object of class rawVoltageRepo()

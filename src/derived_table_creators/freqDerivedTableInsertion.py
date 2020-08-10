@@ -3,7 +3,7 @@ from typing import List, Tuple
 from src.repos.derivedFreqRepo.freqFromDbToRecords import freqFromDbToRecords
 from src.repos.derivedFreqRepo.derFreqParamInRecordsToDb import derFreqParamInRecordsToDb
 def freqDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configDict) -> bool:
-    """fetches raw freq from raw-freq table and pushes into derived freq-table
+    """fetches raw freq from raw_frequency table and pushes into derived_frequency
 
     Args:
         startDate (dt.datetime): start date

@@ -3,6 +3,8 @@ import datetime as dt
 from typing import List, Tuple
 
 class derFreqParamInRecordsToDb():
+    """repository to push derived frequency parameters in derived_frequency table in local db.
+    """    
     def __init__(self,con_string:str) ->None:
         """initialize connection string
 

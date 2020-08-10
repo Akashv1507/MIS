@@ -3,7 +3,7 @@ from typing import List, Tuple
 from src.fetchers.freqDbFetcherServer import getFreqFromDb
 from src.repos.rawFrequencyRepo import rawFrequencyTodbRepo
 def freqRawTableCreator(startDate:dt.datetime, endDate:dt.datetime,configDict) -> bool:
-    """fetches raw frequency from reporting software and pushes into local db.
+    """fetches raw frequency from reporting software and pushes raw_frequency table into local db.
 
     Args:
         startDate (dt.datetime): start date

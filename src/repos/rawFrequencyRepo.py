@@ -6,7 +6,7 @@ class rawFrequencyTodbRepo():
     """raw frequency(push) repo
     """    
     def __init__(self,con_string) ->None:
-        """initialize connection string
+        """initialize connection string, constructor method
 
         Args:
             con_string ([type]): connection string 
@@ -14,7 +14,7 @@ class rawFrequencyTodbRepo():
         self.con_string=con_string
 
     def freqToDb(self,listOfTuples: List[Tuple]) -> bool:
-        """push list of tuples in the form (time_stamp,frequency) into local db
+        """push list of tuples in the form (time_stamp,frequency) into raw_frequency table in local db
 
         Args:
             listOfTuples (List[Tuple]):  data in the form of list of tuples that is to be pushed into database

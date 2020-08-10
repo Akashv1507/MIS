@@ -1,7 +1,7 @@
 from src.repos.rawVoltageRepo import rawVoltageRepo
 
 def voltageRawTableCreator(configDict:dict) -> bool:
-    """push raw voltage data into local database
+    """push raw voltage data into raw_voltage table in local database
 
     Args:
         configDict (dict): application dictionary
