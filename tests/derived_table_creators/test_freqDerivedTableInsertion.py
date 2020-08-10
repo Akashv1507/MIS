@@ -5,7 +5,7 @@ from src.appConfig import getAppConfigDict
 
 
 class testFreqDerivedTableInsertion(unittest.TestCase):
-    """test whether frequency derived table insertion is success or not.
+    """test whether derived_frequency table insertion is success or not.
 
     Args:
         unittest ([type]): [description]
@@ -16,6 +16,8 @@ class testFreqDerivedTableInsertion(unittest.TestCase):
         self.appConfig = getAppConfigDict()
 
     def test_run(self) -> None:
+        """test whether derived_frequency table insertion is success or not.
+        """        
         startDate=dt.strptime("2019-07-29", '%Y-%m-%d')
         endDate=dt.strptime("2019-07-31", '%Y-%m-%d')
         

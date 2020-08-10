@@ -5,7 +5,7 @@ from src.appConfig import getAppConfigDict
 
 
 class tesVoltageRawTableCreator(unittest.TestCase):
-    """test whether raw voltage insertion is success
+    """test whether raw_voltage table insertion is success or not.
 
     Args:
         unittest ([type]): [description]
@@ -16,5 +16,7 @@ class tesVoltageRawTableCreator(unittest.TestCase):
         self.appConfig = getAppConfigDict()
 
     def test_run(self) -> None:
+        """test whether raw_voltage table insertion is success or not.
+        """        
         
         self.assertTrue(voltageRawTableCreator(self.appConfig))

@@ -5,7 +5,7 @@ from src.appConfig import getAppConfigDict
 
 
 class testFreqRawTableCreator(unittest.TestCase):
-    """test whether frequency raw table insertion is success or not.
+    """test whether raw_frequency table insertion is success or not.
 
     Args:
         unittest ([type]): [description]
@@ -16,6 +16,8 @@ class testFreqRawTableCreator(unittest.TestCase):
         self.appConfig = getAppConfigDict()
 
     def test_run(self) -> None:
+        """test whether raw_frequency table insertion is success or not.
+        """        
         startDate=dt.strptime("2019-07-30", '%Y-%m-%d')
         endDate=dt.strptime("2019-07-30", '%Y-%m-%d')
         
