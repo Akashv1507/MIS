@@ -2,6 +2,7 @@ import cx_Oracle
 import pandas as pd
 import datetime as dt
 from typing import List, Tuple
+import copy
 class FetchRawVoltage():
     """Repository class for fetching raw voltage from local db and generating derived VDI voltage record
     """    
@@ -33,8 +34,8 @@ class FetchRawVoltage():
                 for i in lstOfVoltValues:
                     if i < 380:
                         count = count + 1
-            return (count/len(lstOfVoltValues))*100
-        
+            return (count/len(lstOfVoltValues))*100    
+
         def greaterThan(nodeVoltage,lstOfVoltValues):
             count = 0
             if nodeVoltage == 765:
@@ -48,12 +49,11 @@ class FetchRawVoltage():
             return (count/len(lstOfVoltValues))*100
 
         df['date'] = df['TIME_STAMP'].dt.date
-        df['week'] = df['TIME_STAMP'].dt.week
         df['date']=df['date'].apply(lambda x: x- dt.timedelta(days = x.weekday()))
         # del df['TIME_STAMP']
 
         data = []
-        group = df.groupby(['NODE_NAME','week'])
+        group = df.groupby(['NODE_NAME','date'])
         for nameOfGroup, groupDf in group:
             # groupDf.to_excel(r'G:\python\groupDF.xlsx', index = False)
             # break
@@ -63,12 +63,12 @@ class FetchRawVoltage():
             nodeVoltage = int(groupDf['NODE_VOLTAGE'].min())
             weeklyMaximum = int(groupDf['VOLTAGE_VALUE'].max())
             weeklyMinimum = int(groupDf['VOLTAGE_VALUE'].min())
-            lessThanIegcBand = lessThan(nodeVoltage, df['VOLTAGE_VALUE'].values.tolist())
-            greaterThanIegcBand = greaterThan(nodeVoltage, df['VOLTAGE_VALUE'].values.tolist())
-            betweenIegcBand=100-(lessThanIegcBand + greaterThanIegcBand) #percentage of time
+            lessThanIegcBand = lessThan(nodeVoltage, groupDf['VOLTAGE_VALUE'].values.tolist())
+            greaterThanIegcBand = greaterThan(nodeVoltage, groupDf['VOLTAGE_VALUE'].values.tolist())
+            betweenIegcBand = 100 - (lessThanIegcBand + greaterThanIegcBand) #percentage of time
             lessThanIegcBandInHrs = lessThanIegcBand * 1.68
             greaterThanIegcBandInHrs = greaterThanIegcBand * 1.68
-            outOfBandInHrs =lessThanIegcBandInHrs + greaterThanIegcBandInHrs
+            outOfBandInHrs = lessThanIegcBandInHrs + greaterThanIegcBandInHrs
             VDI = outOfBandInHrs/168
             tempTuple =(mappingId,date,nodeName, nodeVoltage, weeklyMaximum, weeklyMinimum, lessThanIegcBand, betweenIegcBand, greaterThanIegcBand, lessThanIegcBandInHrs, greaterThanIegcBandInHrs, outOfBandInHrs, VDI)
             data.append(tempTuple)

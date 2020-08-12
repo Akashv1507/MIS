@@ -1,6 +1,8 @@
-from src.repos.rawVoltageRepo import rawVoltageRepo
+from src.repos.rawVoltageRepo import RawVoltageRepo
+from src.fetchers.VoltageFetchFromExcel import voltageFetchFromExcel
+import datetime as dt
 
-def voltageRawTableCreator(configDict:dict) -> bool:
+def voltageRawTableCreator(date:dt.datetime ,configDict:dict) -> bool:
     """push raw voltage data into raw_voltage table in local database
 
     Args:
@@ -11,11 +13,15 @@ def voltageRawTableCreator(configDict:dict) -> bool:
     """    
 
     con_string = configDict['con_string_local']
-    file_path = configDict['file_path'] + '\\VOLTTEMP_29_07_2019.csv'
+    obj_rawVoltageRepo = RawVoltageRepo(con_string)
 
-    obj_rawVoltageRepo = rawVoltageRepo(con_string,file_path)
+    dateStr = str(date)
+    fileName = '\\VOLTTEMP_'+ dateStr[8:10] +'_' +dateStr[5:7] + '_' + dateStr[0:4] +'.csv'
+    file_path = configDict['file_path'] + fileName
 
-    isInsertionSuccess = obj_rawVoltageRepo.voltToDb()
+    listOfTuple = voltageFetchFromExcel(file_path)
+
+    isInsertionSuccess = obj_rawVoltageRepo.insertionRawVoltToDb(listOfTuple)
 
     return isInsertionSuccess
 
