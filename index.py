@@ -6,10 +6,11 @@ from src.raw_table_creators.voltageRawTableCreator import voltageRawTableCreator
 from src.raw_table_creators.freqRawTableCreator import freqRawTableCreator
 from src.derived_table_creators.freqDerivedTableInsertion import freqDerivedTableInsertion
 from src.derived_table_creators.voltageDerivedTableInsertion import voltageDerivedTableInsertion
+from src.derived_table_creators.VDIDerivedTableInsertion import VDIDerivedTableInsertion
 
 configDict=getAppConfigDict()
-startDate=dt.strptime("2019-07-30", '%Y-%m-%d')
-endDate=dt.strptime("2019-07-31", '%Y-%m-%d')
+startDate=dt.strptime("2019-07-22", '%Y-%m-%d')
+endDate=dt.strptime("2019-07-28", '%Y-%m-%d')
 
 
 #repo code start.
@@ -17,8 +18,9 @@ endDate=dt.strptime("2019-07-31", '%Y-%m-%d')
 # print(freqRawTableCreator(startDate,endDate,configDict))
 # print(voltageRawTableCreator(configDict))
 
-print(freqDerivedTableInsertion(startDate,endDate,configDict))
 # print(voltageDerivedTableInsertion(startDate,endDate,configDict))
+
+print(VDIDerivedTableInsertion(startDate,endDate,configDict))
 
 
 
