@@ -2,7 +2,7 @@ import cx_Oracle
 import pandas as pd
 import datetime as dt
 from typing import List, Tuple
-class freqFromDbToRecords():
+class FreqFromDbToRecords():
     """derived frequency(fetch) repository
     """    
     def __init__(self,con_string):

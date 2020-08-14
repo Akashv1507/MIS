@@ -1,7 +1,7 @@
 import datetime as dt
 from typing import List, Tuple
 from src.fetchers.freqDbFetcherServer import getFreqFromDb
-from src.repos.rawFrequencyRepo import rawFrequencyTodbRepo
+from src.repos.rawFrequencyRepo import RawFrequencyTodbRepo
 def freqRawTableCreator(startDate:dt.datetime, endDate:dt.datetime,configDict) -> bool:
     """fetches raw frequency from reporting software and pushes raw_frequency table into local db.
 
@@ -16,12 +16,10 @@ def freqRawTableCreator(startDate:dt.datetime, endDate:dt.datetime,configDict) -
 
     con_string= configDict['con_string_local']
 
-    listOfTuples=getFreqFromDb(startDate,endDate,configDict)
-    print(listOfTuples[:5])
-    print(len(listOfTuples))
+    listOfTuples = getFreqFromDb(startDate,endDate,configDict)
 
-    Obj_rawFrequencyTodbRepo=rawFrequencyTodbRepo(con_string) # object of rawFrequencyTodbRepo class
+    Obj_rawFrequencyTodbRepo = RawFrequencyTodbRepo(con_string) # object of rawFrequencyTodbRepo class
 
-    isInsertionSuccess=Obj_rawFrequencyTodbRepo.freqToDb(listOfTuples)
+    isInsertionSuccess = Obj_rawFrequencyTodbRepo.insertionOfFrequencyToDb(listOfTuples)
 
     return isInsertionSuccess

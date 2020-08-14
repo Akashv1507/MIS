@@ -2,7 +2,7 @@ import cx_Oracle
 import pandas as pd
 import datetime as dt
 from typing import List, Tuple
-class rawFrequencyTodbRepo():
+class RawFrequencyTodbRepo():
     """raw frequency(push) repo
     """    
     def __init__(self,con_string) ->None:
@@ -13,7 +13,7 @@ class rawFrequencyTodbRepo():
         """        
         self.con_string=con_string
 
-    def freqToDb(self,listOfTuples: List[Tuple]) -> bool:
+    def insertionOfFrequencyToDb(self,listOfTuples: List[Tuple]) -> bool:
         """push list of tuples in the form (time_stamp,frequency) into raw_frequency table in local db
 
         Args:

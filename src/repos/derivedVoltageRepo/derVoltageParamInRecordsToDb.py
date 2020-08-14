@@ -1,7 +1,7 @@
 import cx_Oracle
 import datetime as dt
 from typing import List, Tuple
-class derVoltageParamInRecordsToDb():
+class DerVoltageParamInRecordsToDb():
     """ repository class to push derived voltage records to derived_voltage table in local db
     """    
     def __init__(self,con_string:str) ->None:
@@ -12,7 +12,7 @@ class derVoltageParamInRecordsToDb():
         """        
         self.connString=con_string
 
-    def voltDerivedRecordsToDb(self,data:List[Tuple]) -> bool:
+    def insertionOfVoltDerivedRecordsToDb(self,data:List[Tuple]) -> bool:
         """push derived voltage data into local database.
 
         Args:

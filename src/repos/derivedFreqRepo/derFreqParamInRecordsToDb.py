@@ -2,7 +2,7 @@ import cx_Oracle
 import datetime as dt
 from typing import List, Tuple
 
-class derFreqParamInRecordsToDb():
+class DerFreqParamInRecordsToDb():
     """repository to push derived frequency parameters in derived_frequency table in local db.
     """    
     def __init__(self,con_string:str) ->None:
@@ -13,7 +13,7 @@ class derFreqParamInRecordsToDb():
         """        
         self.connString=con_string
 
-    def freqDerivedRecordsToDb(self,data:List[Tuple]) -> bool:
+    def insertionOfFreqDerivedRecordsToDb(self,data:List[Tuple]) -> bool:
         """Insert data to local derived frequency table
 
         Args:

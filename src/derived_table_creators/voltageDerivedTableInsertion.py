@@ -1,7 +1,7 @@
 import datetime as dt
 from typing import List, Tuple
-from src.repos.derivedVoltageRepo.voltageFromDbtoRecords import voltageFromDbToRecords
-from src.repos.derivedVoltageRepo.derVoltageParamInRecordsToDb import derVoltageParamInRecordsToDb
+from src.repos.derivedVoltageRepo.voltageFromDbtoRecords import VoltageFromDbToRecords
+from src.repos.derivedVoltageRepo.derVoltageParamInRecordsToDb import DerVoltageParamInRecordsToDb
 
 def voltageDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configDict) -> bool:
     """fetch raw voltage from raw_voltage table->generate derived voltage fields->push derived voltage data into derived_voltage table in local db
@@ -16,9 +16,9 @@ def voltageDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,conf
     """    
     con_string= configDict['con_string_local']
 
-    obj_voltageFromDbToRecords = voltageFromDbToRecords(con_string)
-    obj_derVoltageParamInRecordsToDb = derVoltageParamInRecordsToDb(con_string)
+    obj_voltageFromDbToRecords = VoltageFromDbToRecords(con_string)
+    obj_derVoltageParamInRecordsToDb = DerVoltageParamInRecordsToDb(con_string)
 
     listOfTuples= obj_voltageFromDbToRecords.fetchRawVoltFromDb(startDate,endDate)
-    isInsertionSuccess=obj_derVoltageParamInRecordsToDb.voltDerivedRecordsToDb(listOfTuples)
+    isInsertionSuccess=obj_derVoltageParamInRecordsToDb.insertionOfVoltDerivedRecordsToDb(listOfTuples)
     return isInsertionSuccess

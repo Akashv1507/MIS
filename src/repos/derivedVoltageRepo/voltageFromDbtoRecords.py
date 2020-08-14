@@ -2,7 +2,7 @@ import cx_Oracle
 import pandas as pd
 import datetime as dt
 from typing import List, Tuple
-class voltageFromDbToRecords():
+class VoltageFromDbToRecords():
     """Repository class for fetching raw voltage from local db and generating derived voltage record
     """    
     def __init__(self,con_string:str):

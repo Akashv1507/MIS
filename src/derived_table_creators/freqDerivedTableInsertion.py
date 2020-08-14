@@ -1,8 +1,8 @@
 import datetime as dt
 from typing import List, Tuple
-from src.repos.derivedFreqRepo.freqFromDbToRecords import freqFromDbToRecords
-from src.repos.derivedFreqRepo.derFreqParamInRecordsToDb import derFreqParamInRecordsToDb
-def freqDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configDict) -> bool:
+from src.repos.derivedFreqRepo.freqFromDbToRecords import FreqFromDbToRecords
+from src.repos.derivedFreqRepo.derFreqParamInRecordsToDb import DerFreqParamInRecordsToDb
+def freqDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configDict:dict) -> bool:
     """fetches raw freq from raw_frequency table and pushes into derived_frequency
 
     Args:
@@ -15,11 +15,11 @@ def freqDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configD
     """    
     
     con_string= configDict['con_string_local']
-    obj_freqFromDbToRecords = freqFromDbToRecords(con_string)
-    obj_derFreqParamInRecordsToDb = derFreqParamInRecordsToDb(con_string)
+    obj_freqFromDbToRecords = FreqFromDbToRecords(con_string)
+    obj_derFreqParamInRecordsToDb = DerFreqParamInRecordsToDb(con_string)
 
     listOfTuples = obj_freqFromDbToRecords.fetchRawFreqFromDb(startDate,endDate)
 
-    isInsertionSuccess = obj_derFreqParamInRecordsToDb.freqDerivedRecordsToDb(listOfTuples)
+    isInsertionSuccess = obj_derFreqParamInRecordsToDb.insertionOfFreqDerivedRecordsToDb(listOfTuples)
 
     return isInsertionSuccess

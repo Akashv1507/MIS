@@ -7,7 +7,7 @@ from src.raw_table_creators.freqRawTableCreator import freqRawTableCreator
 from src.derived_table_creators.freqDerivedTableInsertion import freqDerivedTableInsertion
 from src.derived_table_creators.voltageDerivedTableInsertion import voltageDerivedTableInsertion
 from src.derived_table_creators.VDIDerivedTableInsertion import VDIDerivedTableInsertion
-import pandas as pd 
+
 
 configDict=getAppConfigDict()
 startDate=dt.strptime("2019-07-22", '%Y-%m-%d')
@@ -21,4 +21,5 @@ endDate=dt.strptime("2019-07-28", '%Y-%m-%d')
 
 # print(voltageDerivedTableInsertion(startDate,endDate,configDict))
 
-print(VDIDerivedTableInsertion(startDate,endDate,configDict))
+# print(VDIDerivedTableInsertion(startDate,endDate,configDict))
+
