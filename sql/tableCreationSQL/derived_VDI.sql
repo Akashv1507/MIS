@@ -14,6 +14,6 @@ greater_than_band_inHrs number(5,2),
 out_of_band_inHrs number(5,2),
 VDI number(4,3),
 constraints unique_derived_VDI unique(week_start_date,node_name),
-constraints fk_derived_VDI foreign key(mapping_id) references mapping_table(id),
+constraints fk_derived_VDI foreign key(mapping_id) references voltage_mapping_table(id),
 constraints pk_derived_VDI primary key(id)
 )

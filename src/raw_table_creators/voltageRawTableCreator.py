@@ -3,7 +3,7 @@ from src.fetchers.VoltageFetchFromExcel import voltageFetchFromExcel
 import datetime as dt
 
 def voltageRawTableCreator(date:dt.datetime ,configDict:dict) -> bool:
-    """push raw voltage data into raw_voltage table in local database
+    """push raw voltage data into raw_voltage table in mis_warehouse database
 
     Args:
         configDict (dict): application dictionary
@@ -12,7 +12,7 @@ def voltageRawTableCreator(date:dt.datetime ,configDict:dict) -> bool:
         bool: return true if insertion is successfull else false
     """    
 
-    con_string = configDict['con_string_local']
+    con_string = configDict['con_string_mis_warehouse']
     obj_rawVoltageRepo = RawVoltageRepo(con_string)
 
     dateStr = str(date)

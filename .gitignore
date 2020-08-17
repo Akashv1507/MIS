@@ -1,4 +1,5 @@
 excel_data_files
+~$config.xlsx
 config.xlsx
 data/*.xlsx
 

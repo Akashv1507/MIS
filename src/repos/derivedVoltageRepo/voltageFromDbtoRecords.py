@@ -58,7 +58,7 @@ class VoltageFromDbToRecords():
             try:
                 cur=connection.cursor()
                 fetch_sql='''select trunc(vt.time_stamp) date_key,max(mt.ID) Mapping_ID ,vt.node_scada_name,min(mt.node_name)Node_name,min(vt.voltage_value) min,max(vt.voltage_value) max,avg(vt.voltage_value) avg
-    from mapping_table mt,raw_voltage vt 
+    from voltage_mapping_table mt,raw_voltage vt 
     where mt.NODE_SCADA_NAME = vt.NODE_SCADA_NAME and vt.time_stamp between to_date(:start_time) and to_date(:end_time)
     group by vt.node_scada_name,trunc(vt.time_stamp)
     order by date_key,mapping_id'''

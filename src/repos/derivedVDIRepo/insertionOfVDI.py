@@ -3,7 +3,7 @@ import datetime as dt
 from typing import List, Tuple
 
 class InsertionOfVDI():
-    """repository to push derived VDI parameters in derived_VDI table in local db.
+    """repository to push derived VDI parameters in derived_VDI table in mis_warehouse db.
     """    
     def __init__(self,con_string:str) ->None:
         """initialize connection string
@@ -14,11 +14,11 @@ class InsertionOfVDI():
         self.connString=con_string
 
     def insertionOfVDI(self,data:List[Tuple]) -> bool:
-        """Insert data to local derived_VDI table
+        """Insert data to mis_warehouse derived_VDI table
 
         Args:
             self : object of class InsertionOfVDI()
-            data (List[Tuple]): (DATE_KEY,MAXIMUM,MINIMUM,AVERAGE,LESS_THAN_BAND,BETWEEN_BAND,GREATER_THAN_BAND,OUT_OF_BAND,OUT_OF_BAND_INHRS,FDI)
+            data (List[Tuple]): (mapping_id, week_start_date, node_name, node_voltage, maximum, minimum, less_than_band, between_band, greater_than_band, less_than_band_inHrs, greater_than_band_inHrs, out_of_band_inHrs, VDI) 
             
         Returns:
             bool: return true if insertion is successful else false

@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 from src.appConfig import getAppConfigDict
-# from src.raw_table_creators.freq_read_from_excel import readFreqExcel
+from src.raw_table_creators.voltageMappingTable import voltageMappingTable
 from src.fetchers.freqDbFetcherServer import getFreqFromDb
 from src.raw_table_creators.voltageRawTableCreator import voltageRawTableCreator
 from src.raw_table_creators.freqRawTableCreator import freqRawTableCreator
@@ -10,16 +10,20 @@ from src.derived_table_creators.VDIDerivedTableInsertion import VDIDerivedTableI
 
 
 configDict=getAppConfigDict()
-startDate=dt.strptime("2019-07-22", '%Y-%m-%d')
-endDate=dt.strptime("2019-07-28", '%Y-%m-%d')
+startDate=dt.strptime("2020-07-06", '%Y-%m-%d')
+endDate=dt.strptime("2020-07-06", '%Y-%m-%d')
 
-
-#repo code start.
+# 1-frequency
 
 # print(freqRawTableCreator(startDate,endDate,configDict))
-# print(voltageRawTableCreator(startDate,configDict))
+# print(freqDerivedTableInsertion(startDate,endDate,configDict))
 
+# 2-voltage
+
+# voltageMappingTable(configDict)
+# print(voltageRawTableCreator(startDate,configDict))
 # print(voltageDerivedTableInsertion(startDate,endDate,configDict))
 
-# print(VDIDerivedTableInsertion(startDate,endDate,configDict))
+# 3- VDI
+print(VDIDerivedTableInsertion(startDate,endDate,configDict))
 

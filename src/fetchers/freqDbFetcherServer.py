@@ -61,7 +61,7 @@ def getFreqFromDb(startDate:dt.datetime,endDate:dt.datetime,configDict:dict)->Li
         print(connection.version)
         try:
             cur=connection.cursor()
-            fetch_sql="SELECT DATE_KEY, TIME_KEY, FREQ_VAL FROM stg_scada_frequency_nldc WHERE date_key>= :start_date AND date_key<= :end_date "
+            fetch_sql="SELECT DATE_KEY, TIME_KEY, FREQ_VAL FROM reporting_uat.stg_scada_frequency_nldc WHERE date_key>= :start_date AND date_key<= :end_date "
             # cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
             df=pd.read_sql(fetch_sql,params={'start_date' : startDateValue,'end_date': endDateValue},con=connection)
         except Exception as err:

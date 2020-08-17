@@ -2,7 +2,7 @@ import cx_Oracle
 import pandas as pd
 import datetime as dt
 from typing import List, Tuple
-import copy
+# import copy
 class FetchRawVoltage():
     """Repository class for fetching raw voltage from local db and generating derived VDI voltage record
     """    
@@ -55,8 +55,7 @@ class FetchRawVoltage():
         data = []
         group = df.groupby(['NODE_NAME','date'])
         for nameOfGroup, groupDf in group:
-            # groupDf.to_excel(r'G:\python\groupDF.xlsx', index = False)
-            # break
+            
             mappingId = int(groupDf['MAPPING_ID'].max())
             date = str(groupDf['date'].min())
             nodeName = nameOfGroup[0]
@@ -79,7 +78,7 @@ class FetchRawVoltage():
         return data
 
     def fetchRawVoltFromDb(self,startDateKey: dt.datetime, endDateKey: dt.datetime) -> List[Tuple]:
-        """fetches raw voltage data from local db and returns list of tuple in the form
+        """fetches raw voltage data from mis_warehouse and returns list of tuple in the form
         (mapping_id, week_start_date, node_name, node_voltage, maximum, minimum, less_than_band, between_band, greater_than_band, less_than_band_inHrs, greater_than_band_inHrs, out_of_band_inHrs, VDI)
 
         Args:
@@ -106,18 +105,19 @@ class FetchRawVoltage():
             try:
                 cur=connection.cursor()
                 fetch_sql='''select (mt.ID)mapping_Id, vt.time_stamp Time_Stamp,mt.node_voltage, mt.node_name Node_Name,vt.voltage_value
-                        from mapping_table mt,raw_voltage vt 
+                        from voltage_mapping_table mt, raw_voltage vt 
                         where mt.NODE_SCADA_NAME = vt.NODE_SCADA_NAME and vt.time_stamp between to_date(:start_time) and to_date(:end_time)
                         order by time_stamp'''
  
                 cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
-                df=pd.read_sql(fetch_sql,params={'start_time' : start_time_value,'end_time': end_time_value},con=connection)
-                # df.to_excel(r'G:\python\File Name.xlsx', index = False)
+                # print('yaha pahunch gya')
+                df = pd.read_sql(fetch_sql,params={'start_time' : start_time_value,'end_time': end_time_value},con=connection)
+                
                          
             except Exception as err:
                 print('error while creating a cursor',err)
             else:
-                print('retrieval complete')
+                print('retrieval raw voltage complete')
                 connection.commit()
         finally:
             cur.close()

@@ -13,16 +13,22 @@ def filterVoltage(df: pd.core.frame.DataFrame)-> pd.core.frame.DataFrame:
         """    
         for col in df.columns.tolist()[1:]:
             prev=df[col][0]
-            if col[-6]== '4' or col[-7]== '4' or col[-2:] =='RY':
-                for ind in df.index.tolist()[1:]:
+            if col[-6]== '4' or col[-7]== '4' or col[-2:] =='RY': # checking whether 400kv node
+                if df[col][0] < 375 or df[col][0] > 445 :         # checking whether first minute value out of band
+                    df[col][0]=400
+                    prev = df[col][0]
+                for ind in df.index.tolist()[1:]:                 # filtering logic
                     if 375 <= df[col][ind] <= 445:
                         pass
                     else :
                         df[col][ind]=prev
                 prev=df[col][ind]
-            elif col[-6]== '7' :
-                for ind in df.index.tolist()[1:]:
 
+            elif col[-6]== '7' :                                  # checking whether 765kv node  
+                if df[col][0] < 725 or df[col][0] > 815 :         # checking whether first minute value out of band
+                    df[col][0]= 765
+                    prev = df[col][0]
+                for ind in df.index.tolist()[1:]:                 # filtering logic
                     if 725 <= df[col][ind] <= 815:
                         pass
                     else :
