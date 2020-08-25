@@ -9,13 +9,13 @@ def voltageMappingTable(configDict : dict ):
     df = pd.read_csv(file_path)
     data=[]
     for ind in df.index:
-        tuple_value=(int(df['Id'][ind]), df['SCADA ID'][ind],int(df['Node Voltage'][ind]), df['Node Name'][ind], df['Node Full Name'][ind], df['Node Scada Name'][ind], df['Is Included'][ind]) 
+        tuple_value=(int(df['Id'][ind]), df['SCADA ID'][ind],int(df['Node Voltage'][ind]), df['Node Name'][ind], df['Node Full Name'][ind], df['Node Scada Name'][ind], df['Is Included Daily Voltage'][ind],  df['Is Included Weekly VDI'][ind]) 
         data.append(tuple_value)
 
     
-    conn=cx_Oracle.connect(configDict['con_string_local'])
+    conn=cx_Oracle.connect(configDict['con_string_mis_warehouse'])
     cur=conn.cursor()
-    insert_sql="INSERT INTO voltage_mapping_table VALUES(:1, :2, :3, :4, :5, :6, :7)"
+    insert_sql="INSERT INTO voltage_mapping_table VALUES(:1, :2, :3, :4, :5, :6, :7, :8)"
     cur.executemany(insert_sql,data)
     conn.commit()
     cur.close()

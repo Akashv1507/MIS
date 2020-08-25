@@ -9,6 +9,6 @@ minimum number(3,0),
 maximum number(3,0),
 average number(3,0),
 constraints unique_derived_volt unique(date_key,node_name),
-constraints fk_derived_volt foreign key(mapping_id) references mapping_table(id),
+constraints fk_derived_volt foreign key(mapping_id) references voltage_mapping_table(id),
 constraints pk_derived_volt primary key(id)
 )

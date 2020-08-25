@@ -105,7 +105,7 @@ class FreqFromDbToRecords():
             except Exception as err:
                 print('error while creating a cursor',err)
             else:
-                print('retrieval complete')
+                print('retrieval of raw frequency completed')
                 connection.commit()
         finally:
             cur.close()

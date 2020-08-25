@@ -67,7 +67,7 @@ def getFreqFromDb(startDate:dt.datetime,endDate:dt.datetime,configDict:dict)->Li
         except Exception as err:
             print('error while creating a cursor',err)
         else:
-            print('retrieval complete')
+            print('retrieval of raw frequency from reporting software complete')
             connection.commit()
     finally:
         cur.close()

@@ -71,10 +71,7 @@ class FetchRawVoltage():
             VDI = outOfBandInHrs/168
             tempTuple =(mappingId,date,nodeName, nodeVoltage, weeklyMaximum, weeklyMinimum, lessThanIegcBand, betweenIegcBand, greaterThanIegcBand, lessThanIegcBandInHrs, greaterThanIegcBandInHrs, outOfBandInHrs, VDI)
             data.append(tempTuple)
-            #  print(groupDf.head())
-            # print(groupDf.head())
-        # ls=[type(item) for item in data[0]]
-        # print(ls)
+            
         return data
 
     def fetchRawVoltFromDb(self,startDateKey: dt.datetime, endDateKey: dt.datetime) -> List[Tuple]:
@@ -108,15 +105,17 @@ class FetchRawVoltage():
                         from voltage_mapping_table mt, raw_voltage vt 
                         where mt.NODE_SCADA_NAME = vt.NODE_SCADA_NAME and vt.time_stamp between to_date(:start_time) and to_date(:end_time)
                         order by time_stamp'''
+                # fetch_sql ="select * from raw_voltage"
  
                 cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
                 # print('yaha pahunch gya')
-                df = pd.read_sql(fetch_sql,params={'start_time' : start_time_value,'end_time': end_time_value},con=connection)
-                
-                         
+                df = pd.read_sql(fetch_sql, params={'start_time' : start_time_value,'end_time': end_time_value}, con=connection)
+                print(df.head())
+
+                              
             except Exception as err:
                 print('error while creating a cursor',err)
-            else:
+            else: 
                 print('retrieval raw voltage complete')
                 connection.commit()
         finally:

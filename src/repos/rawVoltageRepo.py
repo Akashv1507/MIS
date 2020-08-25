@@ -47,7 +47,7 @@ class RawVoltageRepo():
                 isInsertSuccess= False
 
             else:
-                print('Insertion complete')
+                print('Insertion of raw_voltage complete')
                 connection.commit()
         finally:
             cur.close()

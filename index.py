@@ -11,7 +11,7 @@ from src.derived_table_creators.VDIDerivedTableInsertion import VDIDerivedTableI
 
 configDict=getAppConfigDict()
 startDate=dt.strptime("2020-07-06", '%Y-%m-%d')
-endDate=dt.strptime("2020-07-06", '%Y-%m-%d')
+endDate=dt.strptime("2020-07-12", '%Y-%m-%d')
 
 # 1-frequency
 
@@ -25,5 +25,5 @@ endDate=dt.strptime("2020-07-06", '%Y-%m-%d')
 # print(voltageDerivedTableInsertion(startDate,endDate,configDict))
 
 # 3- VDI
-print(VDIDerivedTableInsertion(startDate,endDate,configDict))
+# print(VDIDerivedTableInsertion(startDate,endDate,configDict))
 

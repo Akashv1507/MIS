@@ -23,7 +23,6 @@ def VDIDerivedTableInsertion(startDate:dt.datetime, endDate:dt.datetime,configDi
 
         
         listOfTuples = obj_fetchRawVoltage.fetchRawVoltFromDb(startDate,endDate)
-        # print(listOfTuples)
         isInsertionSuccess = obj_insertionOfVDI.insertionOfVDI(listOfTuples)
         
         return isInsertionSuccess

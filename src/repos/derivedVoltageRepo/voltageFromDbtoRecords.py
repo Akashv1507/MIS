@@ -68,7 +68,7 @@ class VoltageFromDbToRecords():
             except Exception as err:
                 print('error while creating a cursor',err)
             else:
-                print('retrieval complete')
+                print('retrieval of raw voltage complete')
                 connection.commit()
         finally:
             cur.close()

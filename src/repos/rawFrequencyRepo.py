@@ -43,7 +43,7 @@ class RawFrequencyTodbRepo():
                 isInsertionSuccess = False
 
             else:
-                print('Insertion complete')
+                print('Insertion of raw frequency complete')
                 connection.commit()
         finally:
             cur.close()
