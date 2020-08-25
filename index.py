@@ -10,8 +10,13 @@ from src.derived_table_creators.VDIDerivedTableInsertion import VDIDerivedTableI
 
 
 configDict=getAppConfigDict()
-startDate=dt.strptime("2020-07-06", '%Y-%m-%d')
-endDate=dt.strptime("2020-07-12", '%Y-%m-%d')
+parser = argparse.ArgumentParser()
+parser.add_argument('--start_date', help="Enter Start date in yyyy-mm-dd format")
+parser.add_argument('--end_date', help="Enter end date in yyyy-mm-dd format")
+
+args = parser.parse_args()
+startDate = dt.strptime(args.start_date, '%Y-%m-%d')
+endDate = dt.strptime(args.end_date, '%Y-%m-%d')
 
 # 1-frequency
 
