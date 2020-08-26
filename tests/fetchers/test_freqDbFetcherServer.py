@@ -9,7 +9,7 @@ class testFreqDbFetcherServer(unittest.TestCase):
 
     Args:
         unittest ([type]): [description]
-    """    
+    """
     appConfig = None
 
     def setUp(self):
@@ -17,11 +17,10 @@ class testFreqDbFetcherServer(unittest.TestCase):
 
     def test_run(self) -> None:
         """test whether raw frequency fetching from reporting s/w is success or not
-        """        
-        startDate=dt.strptime("2019-07-28", '%Y-%m-%d')
-        endDate=dt.strptime("2019-07-28", '%Y-%m-%d')
-        days=(endDate-startDate).days
-        result = getFreqFromDb(startDate,endDate,self.appConfig)
-        self.assertTrue(len(result)==(days+1)*8640)
-        self.assertTrue(len(result[0])==2)
-
+        """
+        startDate = dt.strptime("2019-07-28", '%Y-%m-%d')
+        endDate = dt.strptime("2019-07-28", '%Y-%m-%d')
+        days = (endDate-startDate).days
+        result = getFreqFromDb(startDate, endDate, self.appConfig)
+        self.assertTrue(len(result) == (days+1)*8640)
+        self.assertTrue(len(result[0]) == 2)

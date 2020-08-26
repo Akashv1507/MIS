@@ -9,7 +9,7 @@ class tesVoltageRawTableCreator(unittest.TestCase):
 
     Args:
         unittest ([type]): [description]
-    """    
+    """
     appConfig = None
 
     def setUp(self):
@@ -17,6 +17,9 @@ class tesVoltageRawTableCreator(unittest.TestCase):
 
     def test_run(self) -> None:
         """test whether raw_voltage table insertion is success or not.
-        """        
-        
-        self.assertTrue(voltageRawTableCreator(self.appConfig))
+        """
+
+        startDate = dt.strptime("2019-07-30", '%Y-%m-%d')
+        endDate = dt.strptime("2019-07-30", '%Y-%m-%d')
+        self.assertTrue(voltageRawTableCreator(
+            startDate, endDate, self.appConfig))

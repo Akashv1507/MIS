@@ -22,7 +22,7 @@ def voltageRawTableCreator(startDate: dt.datetime, endDate: dt.datetime, configD
         dateStr = str(currDate)
         fileName = '\\VOLTTEMP_' + \
             dateStr[8:10] + '_' + dateStr[5:7] + '_' + dateStr[0:4] + '.csv'
-        file_path = configDict['file_path'] + fileName
+        file_path = configDict['voltage_files_folder_path'] + fileName
 
         listOfTuple = voltageFetchFromExcel(file_path)
 

@@ -1,7 +1,7 @@
 excel_data_files/*.csv
 excel_data_files/*.xlsx
 
-~$config.xlsx
+~*.xlsx
 config.xlsx
 data/*.xlsx
 
