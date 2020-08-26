@@ -30,6 +30,6 @@ print('startDate = {0}, endDate = {1}'.format(dt.strftime(
 isRawDataCreationSuccess = freqRawTableCreator(startDate,endDate,configDict)
 
 if isRawDataCreationSuccess:
-    print('derived raw freq data creation done...')
+    print('raw freq data creation done...')
 else:
-    print('derived raw freq data creation failure...')
+    print('raw freq data creation failure...')

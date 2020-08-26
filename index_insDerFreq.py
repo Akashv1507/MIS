@@ -29,6 +29,6 @@ print('startDate = {0}, endDate = {1}'.format(dt.strftime(
 isDerDataCreationSuccess = freqDerivedTableInsertion(startDate, endDate, configDict)
 
 if isDerDataCreationSuccess:
-    print('derived freq insertion data creation done...')
+    print('derived freq creation done...')
 else:
-    print('derived freq insertion data creation failure...')
+    print('derived freq creation failure...')
