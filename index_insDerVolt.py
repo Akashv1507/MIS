@@ -29,6 +29,6 @@ print('startDate = {0}, endDate = {1}'.format(dt.strftime(
 isDerDataCreationSuccess = voltageDerivedTableInsertion(startDate,endDate,configDict)
 
 if isDerDataCreationSuccess:
-    print('derived voltage insertion data creation done...')
+    print('derived voltage creation done...')
 else:
-    print('derived voltage insertion data creation failure...')
+    print('derived voltage creation failure...')

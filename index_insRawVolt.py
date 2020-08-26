@@ -29,6 +29,6 @@ print('startDate = {0}, endDate = {1}'.format(dt.strftime(
 isRawDataCreationSuccess = voltageRawTableCreator(startDate, endDate, configDict)
 
 if isRawDataCreationSuccess:
-    print('derived raw voltage data creation done...')
+    print('raw voltage data creation done...')
 else:
-    print('derived raw voltage data creation failure...')
+    print('raw voltage data creation failure...')

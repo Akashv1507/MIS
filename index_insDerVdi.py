@@ -29,6 +29,6 @@ print('startDate = {0}, endDate = {1}'.format(dt.strftime(
 isDerDataCreationSuccess = VDIDerivedTableInsertion(startDate,endDate,configDict)
 
 if isDerDataCreationSuccess:
-    print('derived VDI insertion data creation done...')
+    print('derived VDI creation done...')
 else:
-    print('derived VDI insertion data creation failure...')
+    print('derived VDI creation failure...')

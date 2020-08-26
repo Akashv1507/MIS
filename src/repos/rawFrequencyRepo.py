@@ -37,9 +37,14 @@ class RawFrequencyTodbRepo():
             print(connection.version)
             try:
                 cur = connection.cursor()
-                insert_sql = "INSERT INTO raw_frequency(time_stamp,frequency) VALUES(:timestamp, :frequency)"
                 cur.execute(
                     "ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
+                existingFreqRows = [(x[0],)
+                                    for x in listOfTuples]
+                cur.executemany(
+                    "delete from mis_warehouse.raw_frequency where time_stamp=:1", existingFreqRows)
+
+                insert_sql = "INSERT INTO mis_warehouse.raw_frequency(time_stamp,frequency) VALUES(:timestamp, :frequency)"
                 cur.executemany(insert_sql, listOfTuples)
 
             except Exception as err:

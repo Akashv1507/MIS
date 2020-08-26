@@ -119,7 +119,7 @@ class FetchRawVoltage():
                 # print('yaha pahunch gya')
                 df = pd.read_sql(fetch_sql, params={
                                  'start_time': start_time_value, 'end_time': end_time_value}, con=connection)
-                print(df.head())
+                # print(df.head())
 
             except Exception as err:
                 print('error while creating a cursor', err)
