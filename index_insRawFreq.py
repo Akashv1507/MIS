@@ -9,7 +9,7 @@ from src.raw_table_creators.freqRawTableCreator import freqRawTableCreator
 configDict=getAppConfigDict()
 
 endDate = dt.now() - timedelta(days=1)
-startDate = endDate - timedelta(days=8)
+startDate = endDate - timedelta(days=2)
 
 # get start and end dates from command line
 parser = argparse.ArgumentParser()

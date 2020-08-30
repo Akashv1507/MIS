@@ -8,7 +8,7 @@ from src.derived_table_creators.freqDerivedTableInsertion import freqDerivedTabl
 configDict = getAppConfigDict()
 
 endDate = dt.now() - timedelta(days=1)
-startDate = endDate - timedelta(days=8)
+startDate = endDate - timedelta(days=3)
 
 # get start and end dates from command line
 parser = argparse.ArgumentParser()

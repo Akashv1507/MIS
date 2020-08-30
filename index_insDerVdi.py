@@ -7,8 +7,8 @@ from src.derived_table_creators.VDIDerivedTableInsertion import VDIDerivedTableI
 
 configDict=getAppConfigDict()
 
-endDate = dt.now() - timedelta(days=1)
-startDate = endDate - timedelta(days=8)
+endDate = dt.now() - timedelta(days=7)
+startDate = endDate
 
 # get start and end dates from command line
 parser = argparse.ArgumentParser()
