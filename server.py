@@ -1,5 +1,5 @@
 '''
-This is the web server that acts as a service that creates outages raw data
+This is the web server that acts as a service that creates raw/derived data of voltage and frequency
 '''
 import datetime as dt
 from src.appConfig import getAppConfigDict
@@ -16,12 +16,12 @@ app = Flask(__name__)
 appConfig = getAppConfigDict()
 
 # Set the secret key to some random bytes
-# app.secret_key = appConfig['flaskSecret']
+app.secret_key = appConfig['flaskSecret']
 
 
 @app.route('/')
 def hello():
-    return "This is the web server that acts as a service that creates raw/derived data of voltage and frequency "
+    return "This is the web service that acts as a service that creates raw/derived data of voltage and frequency"
 
 
 @app.route('/rawFrequency', methods=['POST'])
@@ -34,11 +34,13 @@ def create_raw_frequency():
     except Exception as ex:
         return jsonify({'message': 'Unable to parse start and end dates of this request body'}), 400
     # create raw frequency raw data between start and end dates
-    isRawDataCreationSuccess = freqRawTableCreator( startDate, endDate, appConfig)
+    isRawDataCreationSuccess = freqRawTableCreator(
+        startDate, endDate, appConfig)
     if isRawDataCreationSuccess:
         return jsonify({'message': 'raw frequency data creation successful!!!', 'startDate': startDate, 'endDate': endDate})
     else:
         return jsonify({'message': 'raw frequency data creation was not success'}), 500
+
 
 @app.route('/derivedFrequency', methods=['POST'])
 def create_derived_frequency():
@@ -50,11 +52,13 @@ def create_derived_frequency():
     except Exception as ex:
         return jsonify({'message': 'Unable to parse start and end dates of this request body'}), 400
     # create frequency derived data between start and end dates
-    isRawDataCreationSuccess = freqDerivedTableInsertion( startDate, endDate, appConfig)
+    isRawDataCreationSuccess = freqDerivedTableInsertion(
+        startDate, endDate, appConfig)
     if isRawDataCreationSuccess:
         return jsonify({'message': 'derived frequency data creation successful!!!', 'startDate': startDate, 'endDate': endDate})
     else:
         return jsonify({'message': 'derived frequency data creation was not success'}), 500
+
 
 @app.route('/rawVoltage', methods=['POST'])
 def create_raw_voltage():
@@ -66,11 +70,13 @@ def create_raw_voltage():
     except Exception as ex:
         return jsonify({'message': 'Unable to parse start and end dates of this request body'}), 400
     # create voltage raw data between start and end dates
-    isRawDataCreationSuccess = voltageRawTableCreator( startDate, endDate, appConfig)
+    isRawDataCreationSuccess = voltageRawTableCreator(
+        startDate, endDate, appConfig)
     if isRawDataCreationSuccess:
         return jsonify({'message': 'raw voltage data creation successful!!!', 'startDate': startDate, 'endDate': endDate})
     else:
         return jsonify({'message': 'raw voltage data creation was not success'}), 500
+
 
 @app.route('/derivedVoltage', methods=['POST'])
 def create_derived_voltage():
@@ -82,11 +88,13 @@ def create_derived_voltage():
     except Exception as ex:
         return jsonify({'message': 'Unable to parse start and end dates of this request body'}), 400
     # create voltage derived data between start and end dates
-    isRawDataCreationSuccess = voltageDerivedTableInsertion( startDate, endDate, appConfig)
+    isRawDataCreationSuccess = voltageDerivedTableInsertion(
+        startDate, endDate, appConfig)
     if isRawDataCreationSuccess:
         return jsonify({'message': ' derived voltage data creation successful!!!', 'startDate': startDate, 'endDate': endDate})
     else:
         return jsonify({'message': ' derived voltage data creation was not success'}), 500
+
 
 @app.route('/derivedVdi', methods=['POST'])
 def create_derived_vdi():
@@ -98,7 +106,8 @@ def create_derived_vdi():
     except Exception as ex:
         return jsonify({'message': 'Unable to parse start and end dates of this request body'}), 400
     # create vdi derived data between start and end dates
-    isRawDataCreationSuccess = VDIDerivedTableInsertion(startDate, endDate, appConfig)
+    isRawDataCreationSuccess = VDIDerivedTableInsertion(
+        startDate, endDate, appConfig)
     if isRawDataCreationSuccess:
         return jsonify({'message': 'VDI derived data creation successful!!!', 'startDate': startDate, 'endDate': endDate})
     else:
@@ -106,5 +115,4 @@ def create_derived_vdi():
 
 
 if __name__ == '__main__':
-    app.run(host = 'localhost', port=int(appConfig['flaskPort']), debug=True)
-    # app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(appConfig['flaskPort']), debug=True)
