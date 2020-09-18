@@ -63,8 +63,8 @@ class FetchRawVoltage():
             date = str(groupDf['date'].min())
             nodeName = nameOfGroup[0]
             nodeVoltage = int(groupDf['NODE_VOLTAGE'].min())
-            weeklyMaximum = int(groupDf['VOLTAGE_VALUE'].max())
-            weeklyMinimum = int(groupDf['VOLTAGE_VALUE'].min())
+            weeklyMaximum = float(groupDf['VOLTAGE_VALUE'].max())
+            weeklyMinimum = float(groupDf['VOLTAGE_VALUE'].min())
             lessThanIegcBand = lessThan(
                 nodeVoltage, groupDf['VOLTAGE_VALUE'].values.tolist())
             greaterThanIegcBand = greaterThan(

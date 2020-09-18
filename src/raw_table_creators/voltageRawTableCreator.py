@@ -20,14 +20,13 @@ def voltageRawTableCreator(startDate: dt.datetime, endDate: dt.datetime, configD
 
     while currDate <= endDate:
         dateStr = str(currDate)
-        fileName = '\\VOLTTEMP_' + \
+        fileName = '\\VOLTAGE_REPORT_scheduled_NEW_' + \
             dateStr[8:10] + '_' + dateStr[5:7] + '_' + dateStr[0:4] + '.csv'
         file_path = configDict['voltage_files_folder_path'] + fileName
 
-        listOfTuple = voltageFetchFromExcel(file_path)
+        listOfTuple = voltageFetchFromExcel(file_path,con_string)
 
-        isInsertionSuccess = obj_rawVoltageRepo.insertionRawVoltToDb(
-            listOfTuple)
+        isInsertionSuccess = obj_rawVoltageRepo.insertionRawVoltToDb(listOfTuple)
 
         # update currDate
         currDate += dt.timedelta(days=1)

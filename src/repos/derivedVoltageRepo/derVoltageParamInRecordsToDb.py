@@ -29,8 +29,8 @@ class DerVoltageParamInRecordsToDb():
         # creating List of tuple (dateKey,nodeName),unique constraint, based on which deletion take place before insertion.
         for row in data:
             dateKey = row[0]
-            nodeName = row[3]
-            delTuple = (dateKey, nodeName)
+            nodeScadaName = row[2]
+            delTuple = (dateKey, nodeScadaName)
             delData.append(delTuple)
 
         try:
@@ -47,7 +47,7 @@ class DerVoltageParamInRecordsToDb():
                 try:
                     cur.execute(
                         "ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD' ")
-                    del_sql = "DELETE FROM derived_voltage where DATE_KEY= :1 AND NODE_NAME= :2 "
+                    del_sql = "DELETE FROM derived_voltage where DATE_KEY= :1 AND NODE_SCADA_NAME= :2 "
                     insert_sql = "INSERT INTO derived_voltage(DATE_KEY,MAPPING_ID,NODE_SCADA_NAME,NODE_NAME,MINIMUM,MAXIMUM,AVERAGE) VALUES(:1, :2, :3, :4, :5, :6, :7)"
                     cur.executemany(del_sql, delData)
                     cur.executemany(insert_sql, data)
