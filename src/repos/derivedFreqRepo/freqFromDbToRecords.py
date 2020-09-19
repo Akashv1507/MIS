@@ -30,21 +30,21 @@ class FreqFromDbToRecords():
         def lessThan(lstOfFreq):
             count = 0
             for i in lstOfFreq:
-                if float(i) < 49.90:
+                if i < 49.90:
                     count = count+1
             return (count/len(lstOfFreq))*100
 
         def greaterThan(lstOfFreq):
             count = 0
             for i in lstOfFreq:
-                if float(i) > 50.05:
+                if i > 50.05:
                     count = count+1
             return (count/len(lstOfFreq))*100
 
         def average(lstOfFreq):
             sum = 0
             for i in lstOfFreq:
-                sum = sum+float(i)
+                sum = sum + i
             return (sum/len(lstOfFreq))
 
         df['Dates'] = pd.to_datetime(df['TIME_STAMP']).dt.date

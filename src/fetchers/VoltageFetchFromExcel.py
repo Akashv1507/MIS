@@ -8,15 +8,16 @@ def filterVoltage(voltageDf: pd.core.frame.DataFrame, mappingDf: pd.core.frame.D
     """return dataframe that contain filtered voltage.
 
     Args:
-        df (pd.core.frame.DataFrame): dataframe without filtering.
+        voltageDf (pd.core.frame.DataFrame): dataframe of voltage values without filtering.
+        mappingDf : dataframe of node_scada_name and node_voltage
 
     Returns:
         pd.core.frame.DataFrame: dataframe with filtering.
     """
     
-    # nodeList = voltageDf.columns.tolist()
-    nodeList = ['DBPWR 4B1 KV']
-
+    nodeList = voltageDf.columns.tolist()
+    # nodeList = ['DBPWR 4B1 KV']
+    # filtering logic
     for index in mappingDf.index:
         nodeName = mappingDf['NODE_SCADA_NAME'][index]
         nodeVoltage = mappingDf['NODE_VOLTAGE'][index]
@@ -44,33 +45,6 @@ def filterVoltage(voltageDf: pd.core.frame.DataFrame, mappingDf: pd.core.frame.D
                         voltageDf[nodeName][ind] = prev
                     prev = voltageDf[nodeName][ind]
     return voltageDf
-
-    # for col in df.columns.tolist()[1:]:
-    #     prev = df[col][0]
-    #     if col[-6] == '4' or col[-7] == '4' or col[-2:] == 'RY':  # checking whether 400kv node
-    #         # checking whether first minute value out of band
-    #         if df[col][0] < 375 or df[col][0] > 445:
-    #             df[col][0] = 400
-    #             prev = df[col][0]
-    #         for ind in df.index.tolist()[1:]:                 # filtering logic
-    #             if 375 <= df[col][ind] <= 445:
-    #                 pass
-    #             else:
-    #                 df[col][ind] = prev
-    #         prev = df[col][ind]
-
-    #     elif col[-6] == '7':                                  # checking whether 765kv node
-    #         # checking whether first minute value out of band
-    #         if df[col][0] < 725 or df[col][0] > 815:
-    #             df[col][0] = 765
-    #             prev = df[col][0]
-    #         for ind in df.index.tolist()[1:]:                 # filtering logic
-    #             if 725 <= df[col][ind] <= 815:
-    #                 pass
-    #             else:
-    #                 df[col][ind] = prev
-    #         prev = df[col][ind]
-    # return df
 
 
 def dfToListOfTuples(df: pd.core.frame.DataFrame) -> List[Tuple]:
