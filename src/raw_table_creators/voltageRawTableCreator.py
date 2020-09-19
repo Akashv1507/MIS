@@ -20,7 +20,7 @@ def voltageRawTableCreator(startDate: dt.datetime, endDate: dt.datetime, configD
 
     while currDate <= endDate:
         dateStr = str(currDate)
-        fileName = '\\VOLTAGE_REPORT_scheduled_NEW_' + \
+        fileName = '\\VOLTAGE_REPORT_Scheduled_NEW_' + \
             dateStr[8:10] + '_' + dateStr[5:7] + '_' + dateStr[0:4] + '.csv'
         file_path = configDict['voltage_files_folder_path'] + fileName
 

@@ -26,7 +26,7 @@ class DerVoltageParamInRecordsToDb():
             bool: returns true if insertion is successful else false
         """
         delData = []
-        # creating List of tuple (dateKey,nodeName),unique constraint, based on which deletion take place before insertion.
+        # creating List of tuple (dateKey,nodeScadaName),unique constraint, based on which deletion take place before insertion.
         for row in data:
             dateKey = row[0]
             nodeScadaName = row[2]
@@ -64,4 +64,5 @@ class DerVoltageParamInRecordsToDb():
         finally:
             cur.close()
             connection.close()
+            print("der VOlt ins success")
         return isInsertionSuccess

@@ -19,9 +19,13 @@ def voltageDerivedTableInsertion(startDate: dt.datetime, endDate: dt.datetime, c
 
     obj_voltageFromDbToRecords = VoltageFromDbToRecords(con_string)
     obj_derVoltageParamInRecordsToDb = DerVoltageParamInRecordsToDb(con_string)
+    currDate = startDate
 
-    listOfTuples = obj_voltageFromDbToRecords.fetchRawVoltFromDb(
-        startDate, endDate)
-    isInsertionSuccess = obj_derVoltageParamInRecordsToDb.insertionOfVoltDerivedRecordsToDb(
-        listOfTuples)
+    while currDate <= endDate:
+        listOfTuples = obj_voltageFromDbToRecords.fetchRawVoltFromDb(
+            currDate, currDate)
+        isInsertionSuccess = obj_derVoltageParamInRecordsToDb.insertionOfVoltDerivedRecordsToDb(
+            listOfTuples)
+        currDate += dt.timedelta(days=1)
+
     return isInsertionSuccess
