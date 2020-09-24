@@ -29,8 +29,9 @@ class InsertionOfVDI():
         for row in data:
             weekStartDate = row[1]
             nodeName = row[2]
-            tempTuple = (weekStartDate, nodeName)
-            # making list of tuple of (weekstartDate,nodeName)(unique), based on which deletion takes place before insertion of duplicate
+            nodeVoltage = row[3]
+            tempTuple = (weekStartDate, nodeName, nodeVoltage)
+            # making list of tuple of (weekstartDate,nodeName,nodeVoltage)(unique), based on which deletion takes place before insertion of duplicate
             delData.append(tempTuple)
 
         try:
@@ -47,7 +48,7 @@ class InsertionOfVDI():
                 try:
                     cur.execute(
                         "ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD' ")
-                    del_sql = "DELETE FROM derived_VDI WHERE week_start_date = :1 AND node_name = :2"
+                    del_sql = "DELETE FROM derived_VDI WHERE week_start_date = :1 AND node_name = :2 AND node_voltage =:3"
                     cur.executemany(del_sql, delData)
                     insert_sql = "INSERT INTO derived_VDI(mapping_id, week_start_date, node_name, node_voltage, maximum, minimum, less_than_band, between_band, greater_than_band, less_than_band_inHrs, greater_than_band_inHrs, out_of_band_inHrs, VDI) VALUES(:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13)"
                     cur.executemany(insert_sql, data)
