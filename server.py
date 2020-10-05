@@ -130,7 +130,7 @@ def display_derived_frequency():
     obj_derivedFrequencyFetch = DerivedFrequencyFetch(con_string)
     derivedFreqDict = obj_derivedFrequencyFetch.fetchDerivedFrequency(startDate, endDate)
     if derivedFreqDict:
-        return jsonify({'message': derivedFreqDict , 'startDate': startDate, 'endDate': endDate})
+        return jsonify({'message': 'Success!', 'data': derivedFreqDict , 'startDate': startDate, 'endDate': endDate})
     else:
         return jsonify({'message': 'Frequency derived data fetch unsuccessfull'}), 500
 
