@@ -8,6 +8,7 @@ from src.derived_table_creators.freqDerivedTableInsertion import freqDerivedTabl
 from src.raw_table_creators.voltageRawTableCreator import voltageRawTableCreator
 from src.derived_table_creators.voltageDerivedTableInsertion import voltageDerivedTableInsertion
 from src.derived_table_creators.VDIDerivedTableInsertion import VDIDerivedTableInsertion
+from src.fetchersForUi.derFrequencyFetchers import DerivedFrequencyFetch
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -16,7 +17,10 @@ app = Flask(__name__)
 appConfig = getAppConfigDict()
 
 # Set the secret key to some random bytes
-app.secret_key = appConfig['flaskSecret']
+# app.secret_key = appConfig['flaskSecret']
+
+# creating instance of classes of fetchers for UI
+con_string = appConfig['con_string_mis_warehouse']
 
 
 @app.route('/')
@@ -113,6 +117,24 @@ def create_derived_vdi():
     else:
         return jsonify({'message': 'VDI deived data data creation was not success'}), 500
 
+@app.route('/displayDerivedFrequency', methods=['POST'])
+def display_derived_frequency():
+    # get start and end dates from get request body
+    reqData = request.get_json()
+    try:
+        startDate = dt.datetime.strptime(reqData['startDate'], '%Y-%m-%d')
+        endDate = dt.datetime.strptime(reqData['endDate'], '%Y-%m-%d')
+    except Exception as ex:
+        return jsonify({'message': 'Unable to parse start and end dates of this request body'}), 400
+    # fetch frequency derived data between start and end dates,returns 1- derivedFrequencyDict['rows'] = derFreqRows|| 2- derivedFrequencyDict['weeklyFDI'] = weeklyFDI
+    obj_derivedFrequencyFetch = DerivedFrequencyFetch(con_string)
+    derivedFreqDict = obj_derivedFrequencyFetch.fetchDerivedFrequency(startDate, endDate)
+    if derivedFreqDict:
+        return jsonify({'message': derivedFreqDict , 'startDate': startDate, 'endDate': endDate})
+    else:
+        return jsonify({'message': 'Frequency derived data fetch unsuccessfull'}), 500
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(appConfig['flaskPort']), debug=True)
+    # app.run(host='0.0.0.0', port=int(appConfig['flaskPort']), debug=True)
+    app.run(port = 8082, debug=True)

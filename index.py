@@ -26,10 +26,16 @@ configDict=getAppConfigDict()
 
 # 2-voltage
 
-voltageMappingTable(configDict)
+# voltageMappingTable(configDict)
 # print(voltageRawTableCreator(startDate,configDict))
 # print(voltageDerivedTableInsertion(startDate,endDate,configDict))
 
 # 3- VDI
 # print(VDIDerivedTableInsertion(startDate,endDate,configDict))
 
+startDate = dt.strptime("2020-09-12", '%Y-%m-%d')
+endDate = dt.strptime("2020-09-14", '%Y-%m-%d')
+
+noOfDays = endDate-startDate
+noOfHrs = (noOfDays.days +1)*24
+print(noOfHrs)
