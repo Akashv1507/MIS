@@ -17,7 +17,7 @@ app = Flask(__name__)
 appConfig = getAppConfigDict()
 
 # Set the secret key to some random bytes
-# app.secret_key = appConfig['flaskSecret']
+app.secret_key = appConfig['flaskSecret']
 
 # creating instance of classes of fetchers for UI
 con_string = appConfig['con_string_mis_warehouse']

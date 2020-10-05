@@ -72,8 +72,6 @@ def getFreqFromDb(startDate: dt.datetime, endDate: dt.datetime, configDict: dict
             # cur.execute("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' ")
             df = pd.read_sql(fetch_sql, params={
                              'start_date': startDateValue, 'end_date': endDateValue}, con=connection)
-            print(df)
-            df.to_excel(r'D:\wrldc_projects\demand_forecasting\filtering demo\freq.xlsx')
         except Exception as err:
             print('error while creating a cursor', err)
         else:
