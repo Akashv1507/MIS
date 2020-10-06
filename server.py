@@ -117,13 +117,13 @@ def create_derived_vdi():
     else:
         return jsonify({'message': 'VDI deived data data creation was not success'}), 500
 
-@app.route('/getDerivedFrequency', methods=['POST'])
+@app.route('/getDerivedFrequency', methods=['GET'])
 def get_derived_frequency():
-    # get start and end dates from get request body
-    reqData = request.get_json()
     try:
-        startDate = dt.datetime.strptime(reqData['startDate'], '%Y-%m-%d')
-        endDate = dt.datetime.strptime(reqData['endDate'], '%Y-%m-%d')
+        startDateStr = request.args.get('startDate', None, type=str)
+        endDateStr = request.args.get('endDate', None, type=str)
+        startDate = dt.datetime.strptime(startDateStr, '%Y-%m-%d')
+        endDate = dt.datetime.strptime(endDateStr, '%Y-%m-%d')
     except Exception as ex:
         return jsonify({'message': 'Unable to parse start and end dates of this request body'}), 400
     # fetch frequency derived data between start and end dates,returns 1- derivedFrequencyDict['rows'] = derFreqRows|| 2- derivedFrequencyDict['weeklyFDI'] = weeklyFDI

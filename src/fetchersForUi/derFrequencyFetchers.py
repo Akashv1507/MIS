@@ -26,13 +26,13 @@ class DerivedFrequencyFetch():
         """
 
         del df['ID']
-        df['DATE_KEY'] = df['DATE_KEY'].dt.date
+        df['DATE_KEY'] = df['DATE_KEY']
         derFreqRows = []
         derivedFrequencyDict = {}
         weeklyFDI = (df['OUT_OF_BAND_INHRS'].sum())/noOfHrs
         for ind in df.index:
             tempDict = {
-                'date': dt.datetime.timestamp(df['DATE_KEY'][ind]),
+                'date': dt.datetime.strftime(df['DATE_KEY'][ind], '%Y-%m-%d'),
                 'max': df['MAXIMUM'][ind],
                 'min': df['MINIMUM'][ind],
                 'avg': df['AVERAGE'][ind],
