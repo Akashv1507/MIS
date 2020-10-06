@@ -117,8 +117,8 @@ def create_derived_vdi():
     else:
         return jsonify({'message': 'VDI deived data data creation was not success'}), 500
 
-@app.route('/displayDerivedFrequency', methods=['POST'])
-def display_derived_frequency():
+@app.route('/getDerivedFrequency', methods=['POST'])
+def get_derived_frequency():
     # get start and end dates from get request body
     reqData = request.get_json()
     try:
